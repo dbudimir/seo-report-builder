@@ -1,0 +1,6 @@
+# remove reports folder
+issue-reports/
+
+# remove merged data
+merged-data.csv
+

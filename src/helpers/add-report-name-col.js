@@ -20,6 +20,20 @@ async function addReportNameColumn(filePath, outputPath = filePath) {
         .pipe(fastcsv.parse({ headers: true }))
         .on("data", (row) => {
           row["report name"] = reportName;
+
+          // Build the 'requires' column value
+          let requires = "";
+          for (const key in row) {
+            // Skip if the key is "report name" or "requires" or the value is empty
+            if (key !== "report name" && key !== "requires" && row[key]) {
+              requires += key + ", ";
+            }
+          }
+          // Remove trailing comma and space
+          requires = requires.slice(0, -2);
+
+          row["requires"] = requires;
+
           rows.push(row);
         })
         .on("end", () => resolve())
